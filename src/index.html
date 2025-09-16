@@ -6,84 +6,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            
+            padding: 0px 8px;
+        }
+
+        body {
+            background-color: #0066cc;
+        }
+
+        div {
+            border: 1px solid red;
+            box-sizing: border-box;
+        }
+
+        #search-box-wrapper {
+            padding: 10px 10px 0px 0px;
+            height: 100px;
+        }
+
         #search-box {
-            width: 60vw;
-            position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
+            /* Your existing styles */
+            width: 80%;
+            line-height: 40px;
+            height: 40px;
+            padding: 0px 20px;
+            border: 1px solid #ccc;
             border-radius: 20px;
-            padding: 10px;
-            display: block;
-            font-size: 16px;
+            margin-top: 10px;
         }
 
         #search-results {
-            width: 100%;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            display: none;
+            border-radius: 20px 20px 0 0;
+            margin-top: 40px;
+            height: calc(100vh - 140px);
+            background-color: white;
         }
 
-        #search-results ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        #search-results li {
-            padding: 5px 0;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #search-results li:hover {
-            background-color: #f0f0f0;
+        #title {
+            line-height: 2em;
+            color: white;
+            border-bottom: 1px solid gray;
         }
     </style>
 </head>
 
 <body>
-    <input type="search" id="search-box" placeholder="Search...">
+    <div id="search-box-wrapper">
+
+        <div style="text-align: center;">
+            <h2 id="title">
+                数字经济行业代码查询</h2>
+            <input type="search" id="search-box" placeholder="输入行业代码或关键词...">
+        </div>
+
+    </div>
+
     <div id="search-results"></div>
 </body>
 <script>
+    const titleList = ['国民经济行业代码查询', '数字经济行业代码查询']
     const searchBox = document.getElementById('search-box');
+    const title = document.getElementById('title');
     const searchResults = document.getElementById('search-results');
+    const changeModle = function () {
+        console.log('....')
+        title.innerHTML = titleList[titleList.length - 1]
+        titleList.push(titleList.shift())
+    }
+    title.addEventListener('click', changeModle)
+
 
     searchBox.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.trim().toLowerCase();
-        const results = [];
 
-        // TO DO: implement search logic here
-        // for example, you can filter an array of data based on the search term
-        const data = [
-            { name: 'John Doe', email: 'john.doe@example.com' },
-            { name: 'Jane Doe', email: 'jane.doe@example.com' },
-            { name: 'Bob Smith', email: 'bob.smith@example.com' },
-        ];
-
-        data.forEach((item) => {
-            if (item.name.toLowerCase().includes(searchTerm) || item.email.toLowerCase().includes(searchTerm)) {
-                results.push(item);
-            }
-        });
-
-        // render search results
-        searchResults.innerHTML = '';
-        if (results.length > 0) {
-            searchResults.style.display = 'block';
-            const ul = document.createElement('ul');
-            results.forEach((result) => {
-                const li = document.createElement('li');
-                li.textContent = `${result.name} (${result.email})`;
-                ul.appendChild(li);
-            });
-            searchResults.appendChild(ul);
-        } else {
-            searchResults.style.display = 'none';
-        }
     });
 </script>
 

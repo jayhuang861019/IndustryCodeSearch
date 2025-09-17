@@ -9,79 +9,81 @@
         * {
             padding: 0px;
             margin: 0px;
-            
-            padding: 0px 8px;
         }
 
         body {
-            background-color: #0066cc;
+            background-color: #f8f4ed;
+            padding: 0px 8px;
         }
 
         div {
-            border: 1px solid red;
+            border: 0px solid red;
             box-sizing: border-box;
         }
 
+        #title {
+            text-align: center;
+            padding-top: 20px;
+            color: black;
+            font-weight: bold;
+            font-size: 22px;
+            line-height: 1.5em;
+            border-bottom: 1px solid #00000011;
+        }
+
+        #title .hint {
+            font-size: 12px;
+            font-weight: normal;
+            color: #555454;
+        }
+
+        #bottom {
+            text-align: center;
+            padding: 8px 0px;
+            font-size: 12px;
+            color: #555454;
+        }
+
         #search-box-wrapper {
-            padding: 10px 10px 0px 0px;
-            height: 100px;
+            text-align: center;
+            padding: 10px 0px;
         }
 
         #search-box {
-            /* Your existing styles */
             width: 80%;
-            line-height: 40px;
             height: 40px;
-            padding: 0px 20px;
-            border: 1px solid #ccc;
+            border: 1px solid #00000011;
             border-radius: 20px;
-            margin-top: 10px;
+            font-size: 14px;
+            padding: 10px 20px;
+            box-sizing: border-box;
         }
 
-        #search-results {
-            border-radius: 20px 20px 0 0;
-            margin-top: 40px;
-            height: calc(100vh - 140px);
+        #content{
+            padding: 10px 0px;
             background-color: white;
-        }
-
-        #title {
-            line-height: 2em;
-            color: white;
-            border-bottom: 1px solid gray;
+            border-radius: 8px;
         }
     </style>
 </head>
 
 <body>
-    <div id="search-box-wrapper">
-
-        <div style="text-align: center;">
-            <h2 id="title">
-                数字经济行业代码查询</h2>
-            <input type="search" id="search-box" placeholder="输入行业代码或关键词...">
-        </div>
-
+    <div id="title">
+        <p>国民经济行业代码查询</p>
+        <p class="hint">点击标题可切换查询内容</p>
     </div>
-
-    <div id="search-results"></div>
+    <div id="search-box-wrapper">
+        <input type="text" id="search-box" placeholder="请输入行业名称或者代码">
+    </div>
+    <div id="content"></div>
+    <div id="bottom">
+        <p>数据来源于国家统计局 | 国家标准GB/T 4754-2017</p>
+        <p>powered by Jayhuang</p>
+    </div>
 </body>
 <script>
     const titleList = ['国民经济行业代码查询', '数字经济行业代码查询']
-    const searchBox = document.getElementById('search-box');
-    const title = document.getElementById('title');
-    const searchResults = document.getElementById('search-results');
-    const changeModle = function () {
-        console.log('....')
-        title.innerHTML = titleList[titleList.length - 1]
-        titleList.push(titleList.shift())
-    }
-    title.addEventListener('click', changeModle)
-
-
-    searchBox.addEventListener('input', (e) => {
-
-    });
+   
 </script>
 
 </html>

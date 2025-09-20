@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>代码查询</title>
     <style>
         * {
             padding: 0px;
@@ -50,7 +50,7 @@
         }
 
         #search-box {
-            width: 80%;
+            width: 100%;
             height: 40px;
             border: 1px solid #00000011;
             border-radius: 20px;
@@ -59,12 +59,48 @@
             box-sizing: border-box;
         }
 
-        #content{
-            padding: 10px 0px;
+        #content,
+        #search-result {
+            padding: 10px 10px;
             background-color: white;
             border-radius: 8px;
+
+        }
+
+        #search-result {
+            display: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .div-l1 {
+            font-weight: bold;
+        }
+
+        .div-l1,
+        .div-l2,
+        .div-l3,
+        .div-l4 {
+            font-size: 16px;
+            line-height: 1.8em;
+            border-bottom: 1px solid gray;
+        }
+
+        .div-l4 {
+            font-style: italic;
+        }
+
+        .sub-menu {
+            max-height: 0px;
+            overflow: hidden;
+        }
+
+        .expanded {
+            max-height: 2000px;
         }
     </style>
+    <link rel="stylesheet" href="./dialog.css">
+    <script src="./dialog.js"></script>
 </head>
 
 <body>
@@ -75,6 +111,7 @@
     <div id="search-box-wrapper">
         <input type="text" id="search-box" placeholder="请输入行业名称或者代码">
     </div>
+    <div id="search-result"></div>
     <div id="content"></div>
     <div id="bottom">
         <p>数据来源于国家统计局 | 国家标准GB/T 4754-2017</p>
@@ -83,7 +120,8 @@
 </body>
 <script>
     const titleList = ['国民经济行业代码查询', '数字经济行业代码查询']
-   
+
 </script>
+<script src="./script.js"></script>
 
 </html>

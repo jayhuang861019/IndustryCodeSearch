@@ -45,7 +45,7 @@ var c2 = [
 
 var c3 = [
     {
-        "code": 10101,
+        code: 10101,
         "name": "计算机整机制造",
         "des": "指将可进行算术或逻辑运算的中央处理器和外围设备集成计算整机的制造，包括硬件与软件集成计算机系统的制造、来件组装计算机的加工",
         "industry": [
@@ -1883,4 +1883,159 @@ var c3 = [
     }
 ]
 
-console.log(data.length)
+var searchC2ByCode = function (code) {
+    let result = []
+    c2.forEach(item => {
+        if (item.code.toString().startsWith(code)) {
+            result.push(item)
+        }
+    })
+    return result
+}
+
+var searchC3ByCode = function (code) {
+    let result = []
+    c3.forEach(item => {
+
+        if (item.code && item.code.toString().startsWith(code)) {
+            result.push(item)
+        }
+    })
+    return result
+}
+var toggleMenu = function () {
+    const subMenu = this.nextElementSibling;
+    if (!subMenu || !subMenu.classList.contains('sub-menu')) {
+        return;
+    }
+    // 检查当前是否已展开
+    const isExpanding = !subMenu.classList.contains('expanded');
+    // 先关闭所有（如果想实现“手风琴”效果，可取消注释）
+    // closeAllSubMenus(element.closest('.menu'));
+    // 切换子菜单状态
+    if (isExpanding) {
+        subMenu.classList.add('expanded');
+        this.innerHTML = this.innerHTML.replace('▶', '▼'); // 展开 → 显示 ▲
+    } else {
+        subMenu.classList.remove('expanded');
+        this.innerHTML = this.innerHTML.replace('▼', '▶'); // 收起 → 显示 ▼
+    }
+
+
+}
+
+var showC3Dital = function (c3) {
+    console.log(c3)
+    let industry = ''
+    if (c3.industry) {
+        c3.industry.forEach(item => {
+            industry += `<span style='color:green'>${item.code}&emsp;</span>${item.name}<br>`
+        })
+    }
+    createDialog(c3.name, c3.des, industry)
+}
+
+/**
+ * Searches for items in the c3 array based on the given value.
+ * The search is performed on both the item's code and name.
+ * The search results are displayed in the 'search-result' element.
+ * The search result count is displayed in the 'search-result' element.
+ * A close button is added to the 'search-result' element to clear the search.
+ *
+ * @param {string} value - The value to search for.
+ * @return {Array} result - The search results.
+ */
+var search = function (value) {
+
+    let result = []
+    c3.forEach(item => {
+        if (item.code && item.code.toString().includes(value)) {
+            result.push(item)
+        } else if (item.name && item.name.includes(value)) {
+            result.push(item)
+        } else if (item.des && item.des.includes(value)) {
+            result.push(item)
+        }
+    })
+
+    let resultDom = document.getElementById('search-result')
+    resultDom.style.display = value == '' ? 'none' : 'block'
+
+    resultDom.innerHTML = `搜索"<span style='color:green'>&nbsp;${value}&nbsp;</span>"结果：共<span style='color:red'>${result.length}</span>条`
+
+    var closeButton = document.createElement('button');
+    closeButton.classList.add('dialog-close-button');
+    closeButton.style.float = 'right'
+    closeButton.textContent = 'Clear';
+    closeButton.addEventListener('click', function () {
+        search('')
+        const searchBox = document.getElementById('search-box')
+        searchBox.value = ''
+    })
+    resultDom.appendChild(closeButton)
+    console.log(result)
+    return result
+}
+
+
+var initData = function () {
+    let containerDom = document.getElementById('content')
+
+    c1.forEach(item => {
+        let newElement = document.createElement('div');
+        newElement.textContent = item.name;
+        newElement.className = 'div-l1'
+        containerDom.appendChild(newElement);
+        let c2List = searchC2ByCode(item.code)
+        c2List.forEach(item => {
+            let newElement = document.createElement('div');
+            newElement.className = 'div-l2'
+            newElement.id = item.code
+            newElement.onclick = toggleMenu
+            newElement.innerHTML = '&emsp;▶ ' + item.code + ' ' + item.name;
+            containerDom.appendChild(newElement);
+
+            let childElement = document.createElement('div');
+            childElement.className = 'sub-menu'
+            containerDom.appendChild(childElement);
+
+            let c3List = searchC3ByCode(item.code)
+            c3List.forEach(item => {
+                let newElement = document.createElement('div');
+                newElement.className = 'div-l3'
+                newElement.id = item.code
+                //  newElement.onclick = toggleMenu
+                newElement.innerHTML = '&emsp;&emsp;○ ' + item.name;
+                childElement.appendChild(newElement);
+
+                let nextElement = document.createElement('div');
+                //nextElement.className = 'sub-menu'
+                nextElement.onclick = function () {
+                    showC3Dital(item)
+                }
+
+                childElement.appendChild(nextElement);
+
+                if (item.industry) {
+                    item.industry.forEach(item => {
+                        let newElement = document.createElement('div');
+                        newElement.id = item.code
+                        newElement.className = 'div-l4'
+                        newElement.innerHTML = '&emsp;&emsp;&emsp; <font color="green">' + item.code + '&nbsp;</font>' + item.name;
+                        nextElement.appendChild(newElement);
+                    })
+                }
+            })
+        })
+    });
+
+
+    const searchBox = document.getElementById('search-box')
+
+    searchBox.addEventListener('input', function () {
+        search(this.value)
+    })
+}
+
+
+initData()
